@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+
+      var map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: {lat: 26 , lng: 78}
+        });
+        if ({{coord1}} != null){
+        for (var k =0; k <{{coord1}}.length; k++){
+        var list=[];
+        var line={{coord1}}[k];
+         for (var i =0; i <line.length; i++) {
+                  console.log({lat: line[i][1], lng: line[i][0]});
+                  list.push ({lat: line[i][1], lng:line[i][0]});
+        }
+        var flightPath = new google.maps.Polyline({
+          path:list,
+          geodesic: true,
+          strokeColor: '#000000',
+          strokeOpacity: 1.0,
+          strokeWeight: 6,
+        });
+        flightPath.setMap(map);
+        }
+        }
+        //if ({{coord2}} != null){
+        //for (var k =0; k <{{coord2}}.length; k++){
+        //var list=[];
+        //var line={{coord2}}[k];
+         //for (var i =0; i <line.length; i++) {
+           //       console.log({lat: line[i][1], lng: line[i][0]});
+             //     list.push ({lat: line[i][1], lng:line[i][0]});
+        //}
+        //var path2 = new google.maps.Polyline({
+          //path:list,
+          //geodesic: true,
+          //strokeColor: '#FFFF00',
+          //strokeOpacity: 1.0,
+          //strokeWeight: 3,
+        //});
+        //path2.setMap(map);
+        //}
+        //}
+        //if ({{coord3}} != null){
+        //for (var k =0; k <{{coord3}}.length; k++){
+        //var list=[];
+        //var line={{coord3}}[k];
+         //for (var i =0; i <line.length; i++) {
+           //       console.log({lat: line[i][1], lng: line[i][0]});
+             //     list.push ({lat: line[i][1], lng:line[i][0]});
+        //}
+        //var path3 = new google.maps.Polyline({
+          //path:list,
+          //geodesic: true,
+          //strokeColor: '#A0522D',
+          //strokeOpacity: 1.0,
+          //strokeWeight: 3,
+        //});
+        //path3.setMap(map);
+        //}
+        //}
+        //if ({{coord4}} != null){
+        //for (var k =0; k <{{coord4}}.length; k++){
+        //var list=[];
+        //var line={{coord4}}[k];
+        // for (var i =0; i <line.length; i++) {
+         //         console.log({lat: line[i][1], lng: line[i][0]});
+          //        list.push ({lat: line[i][1], lng:line[i][0]});
+        //}
+        //var path4 = new google.maps.Polyline({
+          //path:list,
+          //geodesic: true,
+          //strokeColor: '#000080',
+          //strokeOpacity: 1.0,
+          //strokeWeight: 3,
+        //});
+        //path4.setMap(map);
+        //}
+        //}
+        //if ({{coord5}} != null){
+         //for (var k =0; k <{{coord5}}.length; k++){
+        //var list=[];
+        //var line={{coord5}}[k];
+         //for (var i =0; i <line.length; i++) {
+           //       console.log({lat: line[i][1], lng: line[i][0]});
+             //     list.push ({lat: line[i][1], lng:line[i][0]});
+        //}
+        //var path5 = new google.maps.Polyline({
+          //path:list,
+          //geodesic: true,
+          //strokeColor: '#CD5C5C',
+          //strokeOpacity: 1.0,
+          //strokeWeight: 3,
+        //});
+        //path5.setMap(map);
+        //}
+        //}
+        var londelist=[];
+        if ({{londe}} != null){
+
+        for (var k =0; k <{{londe}}.length; k++){
+        var line={{londe}}[k];
+        console.log({lat: line[0], lng: line[1]});
+        londelist.push ({lat: line[0], lng:line[1]});
+        var marker = new google.maps.Marker({
+        position:{lat: line[0], lng:line[1]},
+        title: 'LONDE AT SERVICE',
+        animation:google.maps.Animation.BOUNCE,
+        map: map
+        });
+        var setContent='<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<div id="bodyContent">'+
+      '<p><b>FRIEND</b></p>' +
+      '</div>'+
+      '</div>';
+ var infoWindow = new google.maps.InfoWindow({
+        content:setContent,
+        });
+        infoWindow.setPosition({lat: line[0], lng:line[1]});
+        infoWindow.open(map,marker);
+        }
+        }
+
+        var policemarker = new google.maps.Marker({
+          position:{lat: {{pm}}, lng: {{pn}}},
+          title: 'NEAREST SERVICE PROVIDER',
+          animation:google.maps.Animation.DROP,
+          map: map
+        });
+           var setContent1='<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<div id="bodyContent">'+
+      '<p><b>POLICE</b></p>' +
+      '</div>'+
+      '</div>';
+        var infoWindow = new google.maps.InfoWindow({
+        content:setContent1
+        });
+        infoWindow.setPosition({lat: {{pm}}, lng: {{pn}}});
+        infoWindow.open(map,policemarker);
+
+         if ({{cm}} != null && {{cn}} != null){
+          var crimemarker = new google.maps.Marker({
+          position: {lat: {{cm}}, lng: {{cn}}},
+          title: 'YOUR EXACT LOCATION',
+          animation:google.maps.Animation.DROP,
+          map: map
+        });
+         var setContent1='<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<div id="bodyContent">'+
+      '<p><b>SHASHANK (I AM IN PROBLEM)</b></p>' +
+      '</div>'+
+      '</div>';
+        var infoWindow = new google.maps.InfoWindow({
+        content:setContent1
+        });
+        infoWindow.setPosition({lat: {{cm}}, lng: {{cn}}});
+        infoWindow.open(map,crimemarker);
+        console.log({lat: {{cm}}, lng: {{cn}}})
+        map.setCenter({lat: {{cm}}, lng: {{cn}}});
+}
+         var bounds = {
+          north: {{north}},
+          south: {{south}},
+          east: {{east}},
+          west: {{west}}
+        };
+        //var list=[];
+        //for (var k =0; k <{{coord}}.length; k++){
+        //var line={{coord}}[k];
+        //console.log({lat: line[0], lng: line[1]});
+        //list.push ({lat: line[0], lng:line[1]});
+        //}
+        //var Path6 = new google.maps.Polyline({
+         // path:list,
+          //geodesic: true,
+          //strokeColor: '#00FF00',
+          //strokeOpacity: 1.0,
+          //strokeWeight: 2
+        //});
+        //Path6.setMap(map);
+         map.fitBounds(bounds);
+       }
+
+    </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuCQItK2CtSoafNZkJduTGgsjGfGi2Fw4&callback=initMap">
+    </script>
+  </body>
+</html>

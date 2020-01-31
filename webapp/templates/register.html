@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>REGISTER</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,500' rel='stylesheet' type='text/css'>
+    <link href='custom.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body style="background-color:#FF6D00;">
+    <div class="container">
+            <div class="jumbotron" align="center">
+                <h1 style="font-size: 30px; color:#FFFFFF;  text-shadow: 4px 4px 8px green;">REGISTER
+                </h1></div>
+                <form action="{% url 'sansad' %}" method="post" id="usrform" enctype="multipart/form-data"> {% csrf_token %}
+                    <div class="jumbotron" align="center">
+                        <label about="center" for="email">Firstname</label>
+                            <input align="center" type="text"  id="email" name="Username" placeholder="Enter email" value="eshan" />
+                        <label  for="pwd">Lastname</label>
+                            <input align="center" type="password" id="pwd" placeholder="Enter password" name="pwd" value="eshan"/>
+                        <label  for="pwd">Phone Number</label>
+                            <input align="center" type="tel" id="tel" placeholder="Number" name="tel" value="9805249419"/>
+                        <label  for="pwd">Aadhhar Number</label>
+                            <input align="center" type="number" id="adhaar" placeholder="Number" name="adhaar" value="123456789874"/>
+                          <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LdzBFoUAAAAAFPcccBpyEfzQFrKVDPRGBLoa5Vp" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
+                                <input class="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha">
+                            <div class="help-block with-errors"></div>
+
+                        </div>
+
+                            <input style="font-family: Times New Roman, Times, serif;  font-weight: bold;" align="center" type="submit" value="SUBMIT">
+
+                    </div>
+                </form>
+             </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="validator.js"></script>
+    <script src="contact.js"></script>
+</body>
+
+</html>

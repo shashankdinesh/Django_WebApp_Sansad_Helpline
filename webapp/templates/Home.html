@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+   <table border ="0" width ="100%" bgcolor ="#D3D3D3" style="text-align:center">
+                   <tr>
+				   <td>
+				   <font size ="7" face = "Comic sans MS" color = "#4A148C" >PoliceGIS <br></font>
+				   </td>
+				   </tr>
+</table>
+
+<table border ="0" width ="100%" bgcolor ="#D3D3D3">
+    <tr>
+           <td>
+                  <font size ="3" face = "Comic sans MS">
+                       <a href ="Home.html" target = "_self">Home</a>
+                  </font>
+           </td>
+           <td>
+                   <font size ="3" face = "Comic sans MS" color = "#4A148C">
+                        <a href ="Features.html" target = "_self">Features</a>
+                    </font>
+           </td>
+           <td>
+                    <font size ="3" face = "Comic sans MS" color = "#4A148C">
+                         <a href ="{% url 'signin' %}">Sign in</a>
+                    </font>
+			</td>
+			<td>
+					<font size ="3" face = "Comic sans MS" color = "#4A148C">
+							<a href ="Register.html" target = "_self">Register</a>
+					</font>
+			</td>
+			<td>
+					<font size ="3" face = "Comic sans MS" color = "#4A148C">
+							<a href ="Contact_us.html" target = "_self">Contact Us</a>
+					</font>
+			</td>
+	</tr>
+</table>
+    <div id="map"></div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      var map, infoWindow;
+      var marker;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat:26.20554286060711  , lng:78.19940686225893},
+          zoom:15
+        });
+        map.addListener('click', addLatLng);
+         map.setTilt(45);
+      var ge = new GoogleEarth(map);
+
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function()
+      {
+        google.maps.event.addListener(map, 'maptypeid_changed', getEarthInstance);
+        map.setMapTypeId(ge.MAP_TYPE_ID);
+      });
+
+    function getEarthInstance()
+    {
+      if(typeof googleEarth.getInstance() === 'undefined')
+      {
+        setTimeout("getEarthInstance()", 500);
+      } else {
+        var earth = ge.getInstance(); // earth is GEPlugin
+      }
+    }
+      }
+
+
+ function addLatLng(event) {
+
+
+        latitude=event.latLng.lat();
+        longitude=event.latLng.lng();
+   document.getElementById('lat').value = latitude;
+      document.getElementById('lon').value = longitude;
+console.log(event.latLng)
+        if ( marker ) {
+    marker.setPosition(event.latLng);
+  } else {
+    marker = new google.maps.Marker({
+      position: event.latLng,
+      title: 'YOUR EXACT LOCATION',
+          animation:google.maps.Animation.BOUNCE,
+          map: map
+    });
+  }
+
+      }
+      function selectOnlyThis(id) {
+    for (var i = 1;i <= 3; i++)
+    {
+        document.getElementById(i).checked = false;
+    }
+    document.getElementById(id).checked = true;
+}
+    </script>
+   <form action="{% url 'latlonview' %}" method="post">{% csrf_token %}
+      <input type="text" step="0.0000000000000001" id="lat" name="lat" value="" />
+      <input type="text" step="0.0000000000000001" id="lon" name="lon" value=""/>
+      <input type="checkbox" id="1" name="user" value="PROBLEM" onclick="selectOnlyThis(this.id)"/>I AM A PERSON IN PROBLEM
+       <input type="checkbox" id="2" name="helper" value="EMERGENCY"  onclick="selectOnlyThis(this.id)"/> I AM A PERSON HELPING CONCERNED PERSON IN EMERGENCY
+       <input type="checkbox" id="3" name="police" value="EMERGENCY"  onclick="selectOnlyThis(this.id)"/> I AM A EMERGENCY SERVICE PROVIDER
+       <input type="submit" value="Submit" onclick="addLatLng"/>
+         </form>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuCQItK2CtSoafNZkJduTGgsjGfGi2Fw4&callback=initMap">
+    </script>
+  </body>
+</html>
